@@ -7,7 +7,7 @@ import React from "react";
 function App() {
   const [bots, setBots] = useState(5);
   const [showDataTable, setShowDataTable] = useState(false);
-  const [factory, setFactory] = useState<Factory>();
+  const [factory, setFactory] = useState<Factory>(new Factory(bots));
   const clickHandler = () => {
     if (factory) {
       factory.kill();

@@ -9,13 +9,16 @@ class Factory {
     this.bots = bots;
     this.i = -1;
   }
-  init() {}
 
   getBots() {
     return this.bots;
   }
 
-  getData(setData: any) {
+  getStocksData() {
+    return this.data;
+  }
+
+  init(setData: any) {
     this.setData = setData;
     if (!this.interval) this.interval = setInterval(this.timer, 3000, this);
   }
