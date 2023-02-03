@@ -1,0 +1,22 @@
+[
+  {
+    "name": "StockA",
+    "price": 10,
+    "shares": 150
+  },
+  {
+    "name": "StockB",
+    "price": 20,
+    "shares": 200
+  },
+  {
+    "name": "StockC",
+    "price": 15,
+    "shares": 100
+  },
+  {
+    "name": "StockD",
+    "price": 30,
+    "shares": 50
+  }
+]
