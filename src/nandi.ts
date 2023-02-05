@@ -5,6 +5,7 @@ import Order from "./order";
 const nandi = () => {
   generateOrder();
   settleOrder();
+  Factory.addPrice();
 };
 
 const generateOrder = () => {
@@ -15,7 +16,7 @@ const generateOrder = () => {
   const stockIndex = Math.floor(Math.random() * 4);
   const buySell = Math.random() > 0.5 ? 1 : -1;
   const price =
-    Factory.data[stockIndex].price + Math.round((Math.random() - 0.5) * 3);
+    Factory.data[stockIndex].price + Math.round((Math.random() - 0.5) * 4);
   Factory.addOrder(new Order(stockIndex, buySell, price));
 };
 

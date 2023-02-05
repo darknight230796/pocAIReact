@@ -2,21 +2,25 @@
   {
     "name": "StockA",
     "price": 10,
-    "shares": 150
+    "shares": 150,
+    "priceChange": [10]
   },
   {
     "name": "StockB",
     "price": 20,
-    "shares": 200
+    "shares": 200,
+    "priceChange": [20]
   },
   {
     "name": "StockC",
     "price": 15,
-    "shares": 100
+    "shares": 100,
+    "priceChange": [15]
   },
   {
     "name": "StockD",
     "price": 30,
-    "shares": 50
+    "shares": 50,
+    "priceChange": [30]
   }
 ]

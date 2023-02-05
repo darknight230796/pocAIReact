@@ -19,6 +19,10 @@ class Factory {
     Factory.orders.shift();
   }
 
+  static addPrice() {
+    Factory.data.forEach((d) => d.priceChange.push(d.price));
+  }
+
   static kill() {
     if (Factory.interval) {
       clearInterval(Factory.interval);

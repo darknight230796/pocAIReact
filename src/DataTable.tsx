@@ -2,6 +2,59 @@ import Factory from "./Factory";
 import React from "react";
 import Order from "./order";
 import { maxOrders } from "./constants";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Line } from "react-chartjs-2";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+export const options = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: "top" as const,
+    },
+    title: {
+      display: true,
+      text: "Price change chart",
+    },
+  },
+};
+
+const chartColors = [
+  {
+    borderColor: "rgb(255, 0, 0)",
+    backgroundColor: "rgba(255, 99, 132, 0.5)",
+  },
+  {
+    borderColor: "rgb(0, 255, 0)",
+    backgroundColor: "rgba(255, 99, 132, 0.5)",
+  },
+  {
+    borderColor: "rgb(0, 0, 255)",
+    backgroundColor: "rgba(255, 99, 132, 0.5)",
+  },
+  {
+    borderColor: "rgb(255, 99, 132)",
+    backgroundColor: "rgba(255, 99, 132, 0.5)",
+  },
+];
 
 const DataTable = (props: { orders: Array<Order> }) => {
   const { orders } = props;
@@ -39,6 +92,18 @@ const DataTable = (props: { orders: Array<Order> }) => {
     return rows;
   };
 
+  const chartData = {
+    labels: new Array(Factory.data[0].priceChange.length).fill(0),
+    datasets: Factory.data.map((d, index) => {
+      return {
+        label: d.name,
+        data: d.priceChange,
+        borderColor: chartColors[index].borderColor,
+        backgroundColor: chartColors[index].backgroundColor,
+      };
+    }),
+  };
+
   return (
     <div>
       <table>
@@ -61,6 +126,8 @@ const DataTable = (props: { orders: Array<Order> }) => {
           })}
         </tbody>
       </table>
+      <p>Price change chart</p>
+      <Line options={options} data={chartData} />
       <p>Bid Ask table for stocks</p>
       {orders.length > 0 && (
         <div style={{ display: "flex" }}>
@@ -99,8 +166,8 @@ const DataTable = (props: { orders: Array<Order> }) => {
                 <tr>
                   <td>{order.orderId}</td>
                   <td>{Factory.data[order.stockIndex].name}</td>
-                  <td>{order.price}</td>
                   <td>{order.direction === 1 ? "Buy" : "Sell"}</td>
+                  <td>{order.price}</td>
                 </tr>
               );
             })}
