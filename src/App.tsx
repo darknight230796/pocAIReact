@@ -22,6 +22,14 @@ function App() {
   return (
     <div className="App">
       <button onClick={clickHandler}>Click to simulate</button>
+
+      <button
+        onClick={() => {
+          Factory.kill();
+        }}
+      >
+        Stop Simulation
+      </button>
       {showDataTable && <DataTable orders={orders} />}
     </div>
   );
