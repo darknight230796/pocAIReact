@@ -69,12 +69,12 @@ const DataTable = (props: { orders: Array<Order> }) => {
     bidAskList[index].bid = orders
       .filter((order) => order.stockIndex === index && order.direction === 1)
       .sort((a, b) => b.price - a.price)
-      .map((order) => <td>{order.price}</td>);
+      .map((order) => <td>{order.price.toFixed(2)}</td>);
 
     bidAskList[index].ask = orders
       .filter((order) => order.stockIndex === index && order.direction === -1)
       .sort((a, b) => a.price - b.price)
-      .map((order) => <td>{order.price}</td>);
+      .map((order) => <td>{order.price.toFixed(2)}</td>);
   });
 
   const getBidAskList = (index: number) => {
@@ -119,7 +119,7 @@ const DataTable = (props: { orders: Array<Order> }) => {
             return (
               <tr>
                 <td>{stocks.name}</td>
-                <td>{stocks.price}</td>
+                <td>{stocks.price.toFixed(2)}</td>
                 <td>{stocks.shares}</td>
               </tr>
             );
@@ -137,7 +137,7 @@ const DataTable = (props: { orders: Array<Order> }) => {
                 <thead>
                   <tr>
                     <td>{stock.name}</td>
-                    <td>{stock.price}</td>
+                    <td>{stock.price.toFixed(2)}</td>
                   </tr>
                   <tr>
                     <td>Bid</td>
@@ -167,7 +167,7 @@ const DataTable = (props: { orders: Array<Order> }) => {
                   <td>{order.orderId}</td>
                   <td>{Factory.data[order.stockIndex].name}</td>
                   <td>{order.direction === 1 ? "Buy" : "Sell"}</td>
-                  <td>{order.price}</td>
+                  <td>{order.price.toFixed(2)}</td>
                 </tr>
               );
             })}
