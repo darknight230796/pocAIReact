@@ -58,34 +58,24 @@ const chartColors = [
 
 const DataTable = (props: { orders: Array<Order> }) => {
   const { orders } = props;
-  const bidAskList: Record<
-    number,
-    Record<"bid" | "ask", Array<JSX.Element>>
-  > = {};
-
-  Factory.data.forEach((stock, index) => {
-    if (!bidAskList[index])
-      Object.assign(bidAskList, { [index]: { bid: [], ask: [] } });
-    bidAskList[index].bid = orders
-      .filter((order) => order.stockIndex === index && order.direction === 1)
-      .sort((a, b) => b.price - a.price)
-      .map((order) => <td>{order.price.toFixed(2)}</td>);
-
-    bidAskList[index].ask = orders
-      .filter((order) => order.stockIndex === index && order.direction === -1)
-      .sort((a, b) => a.price - b.price)
-      .map((order) => <td>{order.price.toFixed(2)}</td>);
-  });
 
   const getBidAskList = (index: number) => {
-    const bidAsk = bidAskList[index];
+    const bidAsk = Factory.data[index];
     const rows = [];
 
     for (let i = 0; i < Math.max(bidAsk.bid.length, bidAsk.ask.length); i++) {
       rows.push(
         <tr>
-          {i < bidAsk.bid.length ? bidAsk.bid[i] : <td>-</td>}
-          {i < bidAsk.ask.length ? bidAsk.ask[i] : <td>-</td>}
+          {i < bidAsk.bid.length ? (
+            <td>{Factory.getOrder(bidAsk.bid[i])?.price.toFixed(2)}</td>
+          ) : (
+            <td>-</td>
+          )}
+          {i < bidAsk.ask.length ? (
+            <td>{Factory.getOrder(bidAsk.ask[i])?.price.toFixed(2)}</td>
+          ) : (
+            <td>-</td>
+          )}
         </tr>
       );
     }

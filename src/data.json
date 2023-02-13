@@ -3,24 +3,32 @@
     "name": "StockA",
     "price": 10,
     "shares": 150,
-    "priceChange": [10]
+    "priceChange": [10],
+    "bid": [],
+    "ask": []
   },
   {
     "name": "StockB",
     "price": 20,
     "shares": 200,
-    "priceChange": [20]
+    "priceChange": [20],
+    "bid": [],
+    "ask": []
   },
   {
     "name": "StockC",
     "price": 15,
     "shares": 100,
-    "priceChange": [15]
+    "priceChange": [15],
+    "bid": [],
+    "ask": []
   },
   {
     "name": "StockD",
     "price": 30,
     "shares": 50,
-    "priceChange": [30]
+    "priceChange": [30],
+    "bid": [],
+    "ask": []
   }
 ]
