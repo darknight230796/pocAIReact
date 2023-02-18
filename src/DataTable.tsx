@@ -12,7 +12,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { Line } from "react-chartjs-2";
+import { Line, Scatter } from "react-chartjs-2";
 
 ChartJS.register(
   CategoryScale,
@@ -35,6 +35,20 @@ export const options = {
       text: "Price change chart",
     },
   },
+};
+
+export const supplyDemandOptions = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: "top" as const,
+    },
+    title: {
+      display: true,
+      text: "Supply demand chart",
+    },
+  },
+  showLine: true,
 };
 
 const chartColors = [
@@ -132,22 +146,56 @@ const DataTable = (props: { orders: Array<Order> }) => {
       {orders.length > 0 && (
         <div style={{ display: "flex" }}>
           {Factory.data.map((stock, index) => {
+            const chartDataSupplyDemand = {
+              datasets: [
+                {
+                  label: "bid",
+                  data: stock.bid.map((orderId) => {
+                    const order = Factory.getOrder(orderId);
+                    return {
+                      x: order?.quantity,
+                      y: order?.price,
+                    };
+                  }),
+                  borderColor: "rgb(0, 0, 255)",
+                  backgroundColor: "rgba(255, 99, 132, 0.5)",
+                },
+                {
+                  label: "ask",
+                  data: stock.ask.map((orderId) => {
+                    const order = Factory.getOrder(orderId);
+                    return {
+                      x: order?.quantity,
+                      y: order?.price,
+                    };
+                  }),
+                  borderColor: "rgb(255, 0, 0)",
+                  backgroundColor: "rgba(255, 99, 132, 0.5)",
+                },
+              ],
+            };
             return (
-              <table>
-                <thead>
-                  <tr>
-                    <td colSpan={2}>{stock.name}</td>
-                    <td colSpan={2}>{stock.price.toFixed(2)}</td>
-                  </tr>
-                  <tr>
-                    <td>Bid</td>
-                    <td>Quantity</td>
-                    <td>Ask</td>
-                    <td>Quantity</td>
-                  </tr>
-                </thead>
-                <tbody>{getBidAskList(index)}</tbody>
-              </table>
+              <div>
+                <Scatter
+                  options={supplyDemandOptions}
+                  data={chartDataSupplyDemand}
+                />
+                <table>
+                  <thead>
+                    <tr>
+                      <td colSpan={2}>{stock.name}</td>
+                      <td colSpan={2}>{stock.price.toFixed(2)}</td>
+                    </tr>
+                    <tr>
+                      <td>Bid</td>
+                      <td>Quantity</td>
+                      <td>Ask</td>
+                      <td>Quantity</td>
+                    </tr>
+                  </thead>
+                  <tbody>{getBidAskList(index)}</tbody>
+                </table>
+              </div>
             );
           })}
         </div>
