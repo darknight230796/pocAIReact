@@ -71,8 +71,18 @@ const DataTable = (props: { orders: Array<Order> }) => {
           ) : (
             <td>-</td>
           )}
+          {i < bidAsk.bid.length ? (
+            <td>{Factory.getOrder(bidAsk.bid[i])?.quantity}</td>
+          ) : (
+            <td>-</td>
+          )}
           {i < bidAsk.ask.length ? (
             <td>{Factory.getOrder(bidAsk.ask[i])?.price.toFixed(2)}</td>
+          ) : (
+            <td>-</td>
+          )}
+          {i < bidAsk.ask.length ? (
+            <td>{Factory.getOrder(bidAsk.ask[i])?.quantity}</td>
           ) : (
             <td>-</td>
           )}
@@ -126,12 +136,14 @@ const DataTable = (props: { orders: Array<Order> }) => {
               <table>
                 <thead>
                   <tr>
-                    <td>{stock.name}</td>
-                    <td>{stock.price.toFixed(2)}</td>
+                    <td colSpan={2}>{stock.name}</td>
+                    <td colSpan={2}>{stock.price.toFixed(2)}</td>
                   </tr>
                   <tr>
                     <td>Bid</td>
+                    <td>Quantity</td>
                     <td>Ask</td>
+                    <td>Quantity</td>
                   </tr>
                 </thead>
                 <tbody>{getBidAskList(index)}</tbody>
@@ -158,6 +170,7 @@ const DataTable = (props: { orders: Array<Order> }) => {
                   <td>{Factory.data[order.stockIndex].name}</td>
                   <td>{order.direction === 1 ? "Buy" : "Sell"}</td>
                   <td>{order.price.toFixed(2)}</td>
+                  <td>{order.quantity}</td>
                 </tr>
               );
             })}

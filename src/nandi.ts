@@ -17,7 +17,9 @@ const generateOrder = () => {
   const buySell = Math.random() > 0.5 ? 1 : -1;
   const price = Factory.data[stockIndex].price + (Math.random() - 0.5) * 4;
 
-  const order = new Order(stockIndex, buySell, price);
+  const quantity = Math.ceil(Math.random() * Factory.data[stockIndex].shares);
+
+  const order = new Order(stockIndex, buySell, price, quantity);
   Factory.addOrder(order);
   const bidAsk = buySell === 1 ? "bid" : "ask";
 
@@ -41,12 +43,22 @@ const settleOrder = () => {
 
       if (bidPrice >= askPrice) {
         stock.price = (bidPrice + askPrice) / 2;
-        const removeOrder = [bidOrder, askOrder];
+        const quantitySettled = Math.min(askOrder.quantity, bidOrder.quantity);
+
+        const removeOrder: Order[] = [];
+        askOrder.quantity -= quantitySettled;
+        bidOrder.quantity -= quantitySettled;
+        if (askOrder.quantity <= 0) {
+          stock.ask.shift();
+          removeOrder.push(askOrder);
+        }
+        if (bidOrder.quantity <= 0) {
+          stock.bid.shift();
+          removeOrder.push(bidOrder);
+        }
         Factory.orders = Factory.orders.filter(
           (order) => !removeOrder.includes(order)
         );
-        stock.ask.shift();
-        stock.bid.shift();
       } else {
         break;
       }

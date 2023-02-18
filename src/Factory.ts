@@ -13,6 +13,7 @@ class Factory {
   }>;
   static interval: NodeJS.Timer | number | null = null;
   static orders: Array<Order> = [];
+  static addPriceCounter: number = 0;
 
   static init() {
     if (!Factory.interval) Factory.interval = setInterval(nandi, refreshTime);
@@ -33,7 +34,11 @@ class Factory {
   }
 
   static addPrice() {
-    Factory.data.forEach((d) => d.priceChange.push(d.price));
+    if (this.addPriceCounter >= 10) {
+      Factory.data.forEach((d) => d.priceChange.push(d.price));
+      this.addPriceCounter = 0;
+    }
+    this.addPriceCounter += 1;
   }
 
   static kill() {
