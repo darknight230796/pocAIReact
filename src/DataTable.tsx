@@ -81,12 +81,22 @@ const DataTable = (props: { orders: Array<Order> }) => {
       rows.push(
         <tr>
           {i < bidAsk.bid.length ? (
+            <td>{Factory.getOrder(bidAsk.bid[i])?.orderId}</td>
+          ) : (
+            <td>-</td>
+          )}
+          {i < bidAsk.bid.length ? (
             <td>{Factory.getOrder(bidAsk.bid[i])?.price.toFixed(2)}</td>
           ) : (
             <td>-</td>
           )}
           {i < bidAsk.bid.length ? (
             <td>{Factory.getOrder(bidAsk.bid[i])?.quantity}</td>
+          ) : (
+            <td>-</td>
+          )}
+          {i < bidAsk.ask.length ? (
+            <td>{Factory.getOrder(bidAsk.ask[i])?.orderId}</td>
           ) : (
             <td>-</td>
           )}
@@ -183,12 +193,14 @@ const DataTable = (props: { orders: Array<Order> }) => {
                 <table>
                   <thead>
                     <tr>
-                      <td colSpan={2}>{stock.name}</td>
-                      <td colSpan={2}>{stock.price.toFixed(2)}</td>
+                      <td colSpan={3}>{stock.name}</td>
+                      <td colSpan={3}>{stock.price.toFixed(2)}</td>
                     </tr>
                     <tr>
+                      <td>OrderId</td>
                       <td>Bid</td>
                       <td>Quantity</td>
+                      <td>OrderId</td>
                       <td>Ask</td>
                       <td>Quantity</td>
                     </tr>

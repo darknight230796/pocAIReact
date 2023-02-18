@@ -15,13 +15,47 @@ const generateOrder = () => {
 
   const stockIndex = Math.floor(Math.random() * 4);
   const buySell = Math.random() > 0.5 ? 1 : -1;
+  const bidAsk = buySell === 1 ? "bid" : "ask";
   const price = Factory.data[stockIndex].price + (Math.random() - 0.5) * 4;
 
-  const quantity = Math.ceil(Math.random() * Factory.data[stockIndex].shares);
+  const benchmarkOrderIdIndex = Factory.data[stockIndex][bidAsk].findIndex(
+    (id) => {
+      const idPrice = Factory.getOrder(id)?.price;
+      if (!idPrice) return false;
+      return buySell * idPrice <= buySell * price;
+    }
+  );
+  const minQuant =
+    benchmarkOrderIdIndex === -1
+      ? Factory.getOrder(
+          Factory.data[stockIndex][bidAsk][
+            Factory.data[stockIndex][bidAsk].length - 1
+          ]
+        )?.quantity || 0
+      : 0;
+  const minimumQuantity =
+    benchmarkOrderIdIndex > 0
+      ? Factory.getOrder(
+          Factory.data[stockIndex][bidAsk][benchmarkOrderIdIndex - 1]
+        )?.quantity || minQuant
+      : minQuant;
+  const maximumQuantity =
+    benchmarkOrderIdIndex > -1
+      ? Factory.getOrder(
+          Factory.data[stockIndex][bidAsk][benchmarkOrderIdIndex]
+        )?.quantity || Factory.data[stockIndex].shares
+      : Factory.data[stockIndex].shares;
+  const quantity =
+    minimumQuantity +
+    Math.ceil(Math.random() * (maximumQuantity - minimumQuantity));
+
+  if (minimumQuantity > maximumQuantity || minimumQuantity === minQuant) {
+    console.log(Factory.orders, Factory.data);
+    console.log("stop");
+  }
 
   const order = new Order(stockIndex, buySell, price, quantity);
   Factory.addOrder(order);
-  const bidAsk = buySell === 1 ? "bid" : "ask";
 
   Factory.data[stockIndex][bidAsk].push(order.orderId);
   Factory.data[stockIndex][bidAsk].sort((a, b) => {
