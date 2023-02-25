@@ -34,7 +34,7 @@ class Factory {
   }
 
   static addPrice() {
-    if (this.addPriceCounter >= 10) {
+    if (this.addPriceCounter >= 20) {
       Factory.data.forEach((d) => d.priceChange.push(d.price));
       this.addPriceCounter = 0;
     }
