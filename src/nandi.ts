@@ -17,7 +17,7 @@ const generateOrder = () => {
   const buySell = Math.random() > 0.5 ? 1 : -1;
   const bidAsk = buySell === 1 ? "bid" : "ask";
   const price =
-    Factory.data[stockIndex].price * (1 + (Math.random() - 0.5) * 0.1);
+    Factory.data[stockIndex].price * (1 + (Math.random() - 0.5) * Factory.pct);
 
   const benchmarkOrderIdIndex = Factory.data[stockIndex][bidAsk].findIndex(
     (id) => {

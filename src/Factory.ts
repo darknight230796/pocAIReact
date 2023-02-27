@@ -14,9 +14,11 @@ class Factory {
   static interval: NodeJS.Timer | number | null = null;
   static orders: Array<Order> = [];
   static addPriceCounter: number = 0;
+  static pct: number = 0.05;
 
-  static init() {
+  static init(pct: number) {
     if (!Factory.interval) Factory.interval = setInterval(nandi, refreshTime);
+    if (isFinite(pct)) this.pct = pct / 100;
   }
 
   static addOrder(order: Order) {
