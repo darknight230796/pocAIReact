@@ -1,7 +1,7 @@
 import Factory from "./Factory";
 import React from "react";
 import Order from "./order";
-import { maxOrders } from "./constants";
+import { maxOrders, rounding } from "./constants";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -86,7 +86,7 @@ const DataTable = (props: { orders: Array<Order> }) => {
             <td>-</td>
           )}
           {i < bidAsk.bid.length ? (
-            <td>{Factory.getOrder(bidAsk.bid[i])?.price.toFixed(2)}</td>
+            <td>{Factory.getOrder(bidAsk.bid[i])?.price.toFixed(rounding)}</td>
           ) : (
             <td>-</td>
           )}
@@ -101,7 +101,7 @@ const DataTable = (props: { orders: Array<Order> }) => {
             <td>-</td>
           )}
           {i < bidAsk.ask.length ? (
-            <td>{Factory.getOrder(bidAsk.ask[i])?.price.toFixed(2)}</td>
+            <td>{Factory.getOrder(bidAsk.ask[i])?.price.toFixed(rounding)}</td>
           ) : (
             <td>-</td>
           )}
@@ -143,7 +143,7 @@ const DataTable = (props: { orders: Array<Order> }) => {
             return (
               <tr>
                 <td>{stocks.name}</td>
-                <td>{stocks.price.toFixed(2)}</td>
+                <td>{stocks.price.toFixed(rounding)}</td>
                 <td>{stocks.shares}</td>
               </tr>
             );
@@ -194,7 +194,7 @@ const DataTable = (props: { orders: Array<Order> }) => {
                   <thead>
                     <tr>
                       <td colSpan={3}>{stock.name}</td>
-                      <td colSpan={3}>{stock.price.toFixed(2)}</td>
+                      <td colSpan={3}>{stock.price.toFixed(rounding)}</td>
                     </tr>
                     <tr>
                       <td>OrderId</td>
@@ -229,7 +229,7 @@ const DataTable = (props: { orders: Array<Order> }) => {
                   <td>{order.orderId}</td>
                   <td>{Factory.data[order.stockIndex].name}</td>
                   <td>{order.direction === 1 ? "Buy" : "Sell"}</td>
-                  <td>{order.price.toFixed(2)}</td>
+                  <td>{order.price.toFixed(rounding)}</td>
                   <td>{order.quantity}</td>
                 </tr>
               );

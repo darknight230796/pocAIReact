@@ -27,7 +27,14 @@ function App() {
   return (
     <div className="App">
       <p>Change percentage</p>
-      <input onChange={onChangeHandler} type="number" value={pct} />
+      <input
+        onChange={onChangeHandler}
+        type="number"
+        value={pct}
+        step=".01"
+        min={0}
+        max={100}
+      />
       <p>%</p>
       <button onClick={clickHandler}>Click to simulate</button>
 
